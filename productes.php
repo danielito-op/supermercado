@@ -8,7 +8,7 @@
 						<th>Producte</th> 
 						<th>Categoria</th>
 						<th>Preu</th>
-						<th></th>
+						<th>jeje</th>
 					</tr>
 					<tr> 
 						<td class="align-middle">
