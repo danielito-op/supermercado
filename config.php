@@ -14,23 +14,6 @@
 		$username = "root";
 		$password = "";
 		$dbname = "supermercat";
-
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-		if (!$conn) {
-			die("ERROR al connectar con la base de datos");
-		}
-
-		$result = mysqli_query($conn);
-
-		if (!$result) {
-			echo "ERROR al insertar los datos";
-		} else {
-			echo "Datos insertados correctamente";
-		}
-
-		mysqli_close($conn);
-
 		?>
 	</body>
 </html>
