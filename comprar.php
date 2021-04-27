@@ -23,7 +23,7 @@
 				</div>
 				<?php
 
-			$pillando= $_GET["cat"];
+			
 		 	$servername = "localhost";
 			$username = "root";
 			$password = "";
@@ -35,10 +35,13 @@
 			if ($conn->connect_error) {
 				die("ERROR al conectar con la BBDD");
 			}
-			if(!$pillando){
-			$sql = "SELECT * FROM detall_productes";
+				
+			if(!$_GET){
+				$sql = "SELECT * FROM detall_productes";
+			
 			}
 			else{
+				$pillando = $_GET["cat"];
 				$sql = "SELECT * FROM detall_productes WHERE codi_categoria = $pillando";
 			}
 			$result = $conn->query($sql);
@@ -63,7 +66,7 @@
 					$preu = $row["preu"];
 					$codi = $row["codi"];
 					$imatge = $row["imatge"];
-					$codi_categoria =$row["codi_categoria"];
+					$codi_categoria = $row["codi_categoria"];
 					
 					if($codi_categoria == 1){
 						$codi_categoria = "Arròs";
