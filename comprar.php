@@ -5,6 +5,7 @@
 			<div class="row">
 				<div class="col-2 offset-1">
 					<div class="list-group">
+						
 						<a href="comprar.php?cat=1" class="list-group-item list-group-item-action">Arròs</a>
 						<a href="comprar.php?cat=2" class="list-group-item list-group-item-action">Begudes</a>
 						<a href="comprar.php?cat=3" class="list-group-item list-group-item-action">Drogueria</a>
@@ -18,9 +19,11 @@
 						<a href="comprar.php?cat=11" class="list-group-item list-group-item-action">Salses i espècies</a>
 						<a href="comprar.php?cat=12" class="list-group-item list-group-item-action">Snacks i aperitius</a>
 						<a href="comprar.php?cat=13" class="list-group-item list-group-item-action">Sopa i puré</a>
-					</div>
+				</div>
 				</div>
 				<?php
+
+			$pillando= $_GET["cat"];
 		 	$servername = "localhost";
 			$username = "root";
 			$password = "";
@@ -28,12 +31,16 @@
 
 			$conn = new mysqli($servername, $username, $password, $dbname);
 			
+
 			if ($conn->connect_error) {
 				die("ERROR al conectar con la BBDD");
 			}
-
+			if(!$pillando){
 			$sql = "SELECT * FROM detall_productes";
-			
+			}
+			else{
+				$sql = "SELECT * FROM detall_productes WHERE codi_categoria = $pillando";
+			}
 			$result = $conn->query($sql);
 			
 			if ($result) {
@@ -56,14 +63,56 @@
 					$preu = $row["preu"];
 					$codi = $row["codi"];
 					$imatge = $row["imatge"];
+					$codi_categoria =$row["codi_categoria"];
 					
+					if($codi_categoria == 1){
+						$codi_categoria = "Arròs";
+					}
+					else if($codi_categoria == 2){
+						$codi_categoria = "Begudes";
+					}
+					else if($codi_categoria == 3){
+						$codi_categoria = "Drogueria";
+					}
+					else if($codi_categoria == 4){
+						$codi_categoria = "Conserves";
+					}
+					else if($codi_categoria == 5){
+						$codi_categoria = "Esmorzars";
+					}
+					else if($codi_categoria == 6){
+						$codi_categoria = "Mascotes";
+					}
+					else if($codi_categoria == 7){
+						$codi_categoria = "Lactis i ous";
+					}
+					else if($codi_categoria == 8){
+						$codi_categoria = "Llegums";
+					}
+					else if($codi_categoria == 9){
+						$codi_categoria = "Oli, vinagre i sal";
+					}
+					else if($codi_categoria == 10){
+						$codi_categoria = "Pasta";
+					}
+					else if($codi_categoria == 11){
+						$codi_categoria = "Salses i espècies";
+					}
+					else if($codi_categoria == 12){
+						$codi_categoria = "Snacks i aperitius";
+					}
+					else{
+						$codi_categoria = "Sopa i puré";
+					}
 
 					echo	"<tr> 
 							<td class=\"align-middle\">
 								<img src=\"$imatge\" class=\"img-thumbnail mr-2\" style=\"height: 50px;\" />
 								$nom
 							</td>
-							<td class=\"align-middle\">Arròs</td>
+
+							<td class=\"align-middle\">$codi_categoria</td>
+
 							<td class=\"align-middle text-right\">$preu €</td>
 							<td class=\"align-middle\">
 								<form class=\"form-inline\" action=\"carrito.php\" method=\"post\">
@@ -77,7 +126,7 @@
 						</tr>";
 					$row = $result->fetch_assoc();
 					}
-
+					
 					echo "</table>";
 
 				} else {
