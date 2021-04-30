@@ -17,7 +17,35 @@
 							<label for="categoria">Categoria:</label>
 							<select class="form-control" name="categoria" id="categoria">
 								<option value="">Selecciona una opció</option>
-								<option value="1">Arròs</option>
+								
+								<?php
+								require "config.php";
+								$conn = new mysqli($servername, $username, $password, $dbname);
+		
+								if ($conn->connect_error) {
+								die("ERROR al conectar con la BBDD");
+								}
+
+								$sql = "SELECT id_categoria, nom FROM categories ORDER BY nom";
+
+								$result = $conn->query($sql);
+			
+								if ($result) {
+
+								if ($result->num_rows > 0) {
+
+								$row = $result->fetch_assoc();
+								while ($row) {
+
+								$nom = $row["nom"];
+								$codi_categoria = $row["codi_categoria"];
+							
+								echo "<option value=\"$codi_categoria\">$nom</option>";
+								$row = $result->fetch_assoc();
+							}	}
+						}
+						$conn->close();
+								?>
 							</select>
 						</div>
 						<div class="form-group">
