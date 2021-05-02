@@ -4,22 +4,33 @@
 ?>
 		<div class="container m-5 mx-auto text-white">
 			<form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> method="post" enctype="multipart/form-data">
+				<?php
+				$conn = new mysqli($servername, $username, $password, $dbname);
 				
-				<div class="row">
-					<div class="col-4 offset-2">
-						<div class="form-group">
-							<label for="codi">Codi:</label>
-							<input type="text" class="form-control" name="codi" id="codi" />
+
+				$codiget = $_GET["codi"];
+
+
+				$getito = "SELECT * FROM productes WHERE codi = '$codiget'";
+
+				
+				echo "<div class=\"row\">
+					<div class=\"col-4 offset-2\">
+						<div class=\"form-group\">
+							<label for=\"codi\">Codi:</label>
+							<input type=\"text\" class=\"form-control\" name=\"codi\" id=\"codi\" value=\"$codiget\"/>
 						</div>
-						<div class="form-group">
-							<label for="nom">Nom:</label>
-							<input type="text" class="form-control" name="nom" id="nom" />
+						<div class=\"form-group\">
+							<label for=\"nom\">Nom:</label>
+							<input type=\"text\" class=\"form-control\" name=\"nom\" id=\"nom\"/>
 						</div>
-						<div class="form-group">
-							<label for="categoria">Categoria:</label>
-							<select class="form-control" name="categoria" id="categoria">
-								<option value="">Selecciona una opció</option>
-								
+						<div class=\"form-group\">
+							<label for=\"categoria\">Categoria:</label>
+							<select class=\"form-control\" name=\"categoria\" id=\"categoria\">
+								<option value=\"\">Selecciona una opció</option>";
+
+			$conn->close();
+								?>
 								
 								<?php
 								$conn = new mysqli($servername, $username, $password, $dbname);
@@ -140,4 +151,5 @@ if ($uploadOk == 0) {
 
 		$conn->close();
 	}
+
 ?>
