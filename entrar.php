@@ -18,3 +18,47 @@
 		</div>
 	</body>
 </html>
+<?php
+	session_start();
+
+	$incioSesion = false;
+
+	if (!empty($_POST)) {
+
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "supermercat";
+
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		
+		if ($conn->connect_error) {
+			die("ERROR al conectar con la BBDD");
+		}
+
+		$usuario = $_POST["username"];
+		$contrasenya = $_POST["pass"];
+
+		$sql = "SELECT * FROM clients
+				WHERE nom_usuari = '$usuario' AND contrasenya = '$contrasenya'";
+		
+		$result = $conn->query($sql);
+
+		$row = $result->fetch_assoc();
+		if ($row) {	
+			
+			$_SESSION["user"] = $row["id_client"];
+
+			$incioSesion = true;
+
+		}
+
+		$conn->close();
+	}
+
+	if ($incioSesion) {
+		header("Location: comprar.php");
+	} else {
+		echo "L'usuari o/i la contrasenya es/son incorrecta/es.";
+	}
+?>

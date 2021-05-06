@@ -39,15 +39,43 @@
 							<label for="codigo_postal">Codi postal (obligatori):</label>
 							<input type="text" class="form-control" name="codigo_postal" id="codigo_postal" />
 						</div>
-						<div class="form-group">
-							<label for="poblacion">Població (obligatori):</label>
-							<select class="form-control" name="poblacion" id="poblacion">
-								<option value="">Selecciona una opció</option>
-								<option value="1">Badalona</option>
-								<option value="2">Barcelona</option>
-								<option value="3">Castelldefels</option>
-							</select>
-						</div>
+					
+<?php
+
+require "config.php";
+						$conn = new mysqli($servername, $username, $password, $dbname);
+
+		if ($conn->connect_error) {
+			die("ERROR al connectar con la base de datos");
+		}
+
+		$sql = "SELECT id_poblacio, nom FROM poblacions ORDER BY nom";
+
+					$result = $conn->query($sql);
+
+		if ($result) {
+
+
+
+					echo	"<div class=\"form-group\">
+							<label for=\"poblacion\">Població (obligatori):</label>
+							<select class=\"form-control\" name=\"poblacion\" id=\"poblacion\">
+								<option value=\"\">Selecciona una opció</option>";
+
+								$row = $result->fetch_assoc();
+								while($row) {
+
+					$opcio = $row["id_poblacio"];
+					$poblacio = $row["nom"];
+						echo		"<option value=\"$opcio\">$poblacio</option>";
+							
+						$row = $result->fetch_assoc();
+				}
+				echo "</select>
+						</div>";
+			}
+
+						?>
 						<div class="form-group">
 							<label for="telefono">Telèfon:</label>
 							<input type="text" class="form-control" name="telefono" id="telefono" />
